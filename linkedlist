@@ -1,0 +1,201 @@
+import java.util.*;
+public class linkedlist1 {
+    public static class Node{
+        int data;
+        Node next;
+        public Node(int data){
+            this.data=data;
+            this.next=null;
+        }
+    }
+    public static Node head;
+    public static Node tail;
+    public static int size;
+    public void addFirst(int data){
+        Node newNode=new Node(data);
+        size++;
+        if(head==null){
+            head=tail=newNode;
+            return;
+        }
+        newNode.next=head;
+        head=newNode;
+    }public void addLast(int data){
+        Node newNode=new Node(data);
+        size++;
+        if(head==null){
+            head=tail=newNode;
+            return;
+        }
+        tail.next=newNode;
+        tail=newNode;
+    }void atParticular(int idx,int data){
+        Node newNode=new Node(data);
+        size++;
+        if(idx==0){
+            addFirst(data);
+            return;
+        }
+        Node temp=head;
+        int i=0;
+        while(i<idx-1) {
+            i++;
+            temp = temp.next;
+        }
+        newNode.next=temp.next;
+        temp.next=newNode;
+    }public int delFirst(){
+        if(size==0){
+            System.out.println("Linked List does not exist");
+            return Integer.MAX_VALUE;//invalid value like infinity
+        }else if(size==1){
+            int val=head.data;
+            head=tail=null;
+            size=0;
+            return val;
+        }
+        int val=head.data;
+        head=head.next;
+        size--;
+        return val;
+    }public int delLast(){
+        if(size==0){
+            System.out.println("ll is empty");
+            return Integer.MAX_VALUE;
+        }
+        else if(size==1){
+            int val=head.data;
+            head=tail=null;
+            size=0;
+            return val;
+        }
+        Node temp=head;
+        for(int i=0;i<size-2;i++){
+            temp=temp.next;
+        }
+        int val=temp.next.data;
+        temp.next=null;
+        tail=temp;
+        size--;
+        return val;
+    }
+    public void delatPart(int position){
+        if (head == null)
+            return;
+        Node temp = head;
+        if (position == 0) {
+            head = temp.next;
+            return;
+        }
+        for (int i = 0; temp != null && i < position - 1; i++)
+            temp = temp.next;
+        if (temp == null || temp.next == null)
+            return;
+        Node next = temp.next.next;
+        temp.next = next;
+    }
+    public void deleteNthNode(int n){
+        int sz=0;
+        Node temp=head;
+        while(temp!=null){
+            temp=temp.next;
+            sz++;
+        }
+        if(n==sz){
+            head=head.next;
+            return;
+        }
+        int i=0;
+        int t=sz-n;
+        Node prev=head;
+        while(i<t){
+            prev=prev.next;
+            i++;
+        }
+        prev.next=prev.next.next;
+        return;
+    }
+    public void reverse(){
+        Node prev=null;
+        Node curr=tail=head;
+        Node next;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        head=prev;
+    }
+    public void atmiddle1(){
+        int cnt=0;
+        Node temp=head;
+        while(temp!=null){
+            cnt++;
+            temp=temp.next;
+        }
+        int mid=cnt/2;
+        if((cnt&1)==0){
+            mid-=1;
+        }
+        temp=head;
+        while(mid>0){
+            temp=temp.next;
+        }
+    }
+    public void atmiddle2(){
+        Node A=head;
+        Node B=head;
+        while(B!=null && B.next!=null && B.next.next!=null){
+            A=A.next;
+            B=B.next.next;
+        }
+        System.out.print(A);
+    }
+    public void search(int key){
+        int i=0;
+        Node temp=head;
+        while(temp!=null) {
+            if (key == temp.data) {
+                return;
+            } else {
+                temp.next = temp;
+                i++;
+            }
+    }}
+    public void Print(){
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+"->");
+            temp=temp.next;
+        }
+        System.out.println("null");
+    }
+    public static void main(String args[]){
+        linkedlist1 ll =new linkedlist1();
+        ll.addFirst(1);
+        ll.addFirst(2);
+        ll.addLast(6);
+        ll.addLast(9);
+        ll.atParticular(3,5);
+        ll.atParticular(4,8);
+        ll.Print();
+        ll.delatPart(4);
+        ll.Print();
+        System.out.println(ll.size);
+        ll.delFirst();
+        ll.Print();
+        System.out.println(ll.size);
+        ll.delLast();
+        ll.Print();
+        System.out.println(ll.size);
+        ll.search(6);
+        ll.reverse();
+        ll.Print();
+        ll.deleteNthNode(3);
+        ll.Print();
+        ll.atmiddle1();
+        ll.atmiddle2();
+    }
+
+}
